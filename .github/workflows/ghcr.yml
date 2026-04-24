@@ -1,0 +1,36 @@
+name: Build and Push to GHCR
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: docker/metadata-action@v5
+        id: meta
+        with:
+          images: ghcr.io/${{ github.repository_owner }}/srm-challenge
+          tags: |
+            latest
+            {{ sha }}
+
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: ${{ meta.outputs.tags }}
+          labels: ${{ meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Print Image URL
+        run: echo "Image built and pushed to ghcr.io/${{ github.repository_owner }}/srm-challenge:${{ github.sha }}"
