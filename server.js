@@ -5,9 +5,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const USER_ID = 'berzi_24042026';
-const EMAIL_ID = 'berzi@college.edu';
-const COLLEGE_ROLL_NUMBER = '26CS1001';
+const USER_ID = 'ayushdutta_11112004';
+const EMAIL_ID = 'dutta_ayush@srmap.edu.in';
+const COLLEGE_ROLL_NUMBER = 'AP23110011131';
 
 function validateEdge(edge) {
   const trimmed = edge.trim();
