@@ -3,321 +3,557 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SRM Full Stack Challenge</title>
+  <title>Hierarchy Processor | SRM Challenge</title>
   <style>
+    :root {
+      --mistral-orange: #fa520f;
+      --mistral-flame: #fb6424;
+      --block-orange: #ff8105;
+      --sunshine-900: #ff8a00;
+      --sunshine-700: #ffa110;
+      --sunshine-500: #ffb83e;
+      --sunshine-300: #ffd06a;
+      --block-gold: #ffe295;
+      --bright-yellow: #ffd900;
+      --warm-ivory: #fffaeb;
+      --cream: #fff0c2;
+      --mistral-black: #1f1f1f;
+      --input-border: hsl(240, 5.9%, 90%);
+      --shadow-warm-1: rgba(127, 99, 21, 0.12);
+      --shadow-warm-2: rgba(127, 99, 21, 0.10);
+      --shadow-warm-3: rgba(127, 99, 21, 0.06);
+    }
+
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
+
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      font-family: Arial, ui-sans-serif, system-ui, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+      font-weight: 400;
+      background: var(--warm-ivory);
+      color: var(--mistral-black);
       min-height: 100vh;
-      padding: 20px;
+      line-height: 1.50;
     }
+
     .container {
-      max-width: 900px;
+      max-width: 1280px;
       margin: 0 auto;
+      padding: 0 24px;
     }
-    h1 {
-      color: white;
-      text-align: center;
-      margin-bottom: 30px;
-      font-size: 2.5rem;
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+
+    header {
+      padding: 24px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
-    .card {
-      background: white;
-      border-radius: 16px;
-      padding: 30px;
-      margin-bottom: 20px;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+
+    .logo {
+      font-size: 24px;
+      font-weight: 400;
+      letter-spacing: -0.5px;
+      color: var(--mistral-black);
     }
-    label {
+
+    .logo span {
+      color: var(--mistral-orange);
+    }
+
+    .hero {
+      padding: 80px 0 64px;
+    }
+
+    .hero h1 {
+      font-size: 82px;
+      font-weight: 400;
+      line-height: 1.00;
+      letter-spacing: -2.05px;
+      max-width: 900px;
+      margin-bottom: 24px;
+    }
+
+    .hero p {
+      font-size: 16px;
+      color: hsl(0, 0%, 24%);
+      max-width: 600px;
+    }
+
+    .main-card {
+      background: var(--cream);
+      padding: 32px;
+      margin-bottom: 64px;
+      box-shadow: 
+        var(--shadow-warm-1) -8px 16px 39px,
+        var(--shadow-warm-2) -33px 64px 72px,
+        var(--shadow-warm-3) -73px 144px 97px;
+    }
+
+    .input-section {
+      margin-bottom: 24px;
+    }
+
+    .input-section label {
       display: block;
-      margin-bottom: 10px;
-      font-weight: 600;
-      color: #333;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+      color: var(--mistral-black);
     }
+
     textarea {
       width: 100%;
-      height: 150px;
-      padding: 15px;
-      border: 2px solid #e1e1e1;
-      border-radius: 8px;
-      font-family: 'Courier New', monospace;
-      font-size: 14px;
-      resize: vertical;
-      transition: border-color 0.3s;
-    }
-    textarea:focus {
-      outline: none;
-      border-color: #667eea;
-    }
-    .helper {
-      color: #666;
-      font-size: 12px;
-      margin-bottom: 10px;
-    }
-    button {
-      width: 100%;
-      padding: 15px 30px;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      border: none;
-      border-radius: 8px;
+      min-height: 200px;
+      padding: 16px;
+      font-family: Arial, ui-sans-serif, system-ui;
       font-size: 16px;
-      font-weight: 600;
+      border: 1px solid var(--input-border);
+      background: var(--warm-ivory);
+      color: var(--mistral-black);
+      resize: vertical;
+      border-radius: 0;
+    }
+
+    textarea:focus {
+      outline: 2px solid var(--mistral-orange);
+      outline-offset: -2px;
+    }
+
+    .helper {
+      font-size: 14px;
+      color: hsl(0, 0%, 24%);
+      margin-top: 8px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 24px;
+      font-size: 16px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
       cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s;
-      margin-top: 15px;
+      border: none;
+      transition: opacity 0.2s;
     }
-    button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+
+    .btn:hover {
+      opacity: 0.8;
     }
-    button:disabled {
-      opacity: 0.6;
+
+    .btn-dark {
+      background: var(--mistral-black);
+      color: #ffffff;
+    }
+
+    .btn-cream {
+      background: var(--cream);
+      color: var(--mistral-black);
+    }
+
+    .btn:disabled {
+      opacity: 0.4;
       cursor: not-allowed;
     }
-    .error {
-      background: #fee;
-      border: 1px solid #fcc;
-      color: #c00;
-      padding: 15px;
-      border-radius: 8px;
-      margin-bottom: 20px;
+
+    .results-section {
+      margin-top: 32px;
     }
-    .result-section {
-      margin-bottom: 25px;
+
+    .result-block {
+      background: #ffffff;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 
+        var(--shadow-warm-1) -8px 16px 39px,
+        var(--shadow-warm-2) -33px 64px 72px;
     }
-    .result-section h3 {
-      color: #333;
-      margin-bottom: 15px;
-      padding-bottom: 10px;
-      border-bottom: 2px solid #eee;
+
+    .result-block h3 {
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--input-border);
+      color: hsl(0, 0%, 24%);
     }
-    .meta-info {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 15px;
-      margin-bottom: 20px;
-    }
-    .meta-item {
-      background: #f8f9fa;
-      padding: 12px 15px;
-      border-radius: 8px;
-    }
-    .meta-item strong {
-      display: block;
-      color: #666;
-      font-size: 12px;
-      margin-bottom: 5px;
-    }
-    .meta-item span {
-      color: #333;
-      font-weight: 600;
-    }
-    .hierarchies-list {
-      display: grid;
-      gap: 15px;
-    }
-    .hierarchy-card {
-      background: #f8f9fa;
-      border-radius: 8px;
-      padding: 15px;
-      border-left: 4px solid #667eea;
-    }
-    .hierarchy-card.cycle {
-      border-left-color: #e74c3c;
-      background: #fff5f5;
-    }
-    .hierarchy-root {
-      font-weight: 600;
-      color: #333;
-      margin-bottom: 10px;
-    }
-    .hierarchy-depth {
-      display: inline-block;
-      background: #667eea;
-      color: white;
-      padding: 3px 8px;
-      border-radius: 12px;
-      font-size: 12px;
-      margin-left: 10px;
-    }
-    .hierarchy-cycle {
-      display: inline-block;
-      background: #e74c3c;
-      color: white;
-      padding: 3px 8px;
-      border-radius: 12px;
-      font-size: 12px;
-      margin-left: 10px;
-    }
-    .tree-view {
-      font-family: 'Courier New', monospace;
-      font-size: 13px;
-      background: white;
-      padding: 10px;
-      border-radius: 4px;
-      overflow-x: auto;
-    }
-    .summary-cards {
+
+    .meta-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 15px;
+      gap: 16px;
     }
-    .summary-card {
-      text-align: center;
-      padding: 20px;
-      background: #f8f9fa;
-      border-radius: 8px;
+
+    .meta-item {
+      background: var(--warm-ivory);
+      padding: 16px;
     }
-    .summary-card.value {
-      font-size: 32px;
-      font-weight: 700;
-      color: #667eea;
-    }
-    .summary-card label {
-      color: #666;
+
+    .meta-item strong {
+      display: block;
       font-size: 14px;
-      margin-top: 5px;
+      color: var(--sunshine-700);
+      margin-bottom: 4px;
     }
-    .array-list {
+
+    .meta-item span {
+      font-size: 16px;
+      color: var(--mistral-black);
+    }
+
+    .hierarchies-list {
+      display: grid;
+      gap: 16px;
+    }
+
+    .hierarchy-item {
+      background: var(--warm-ivory);
+      padding: 16px;
+      border-left: 4px solid var(--mistral-orange);
+    }
+
+    .hierarchy-item.cycle {
+      border-left-color: var(--mistral-flame);
+      background: #fff5f0;
+    }
+
+    .hierarchy-root {
+      font-size: 24px;
+      font-weight: 400;
+      margin-bottom: 8px;
+    }
+
+    .hierarchy-meta {
+      display: inline-block;
+      background: var(--mistral-black);
+      color: #ffffff;
+      padding: 4px 12px;
+      font-size: 14px;
+      margin-right: 8px;
+    }
+
+    .hierarchy-meta.cycle-tag {
+      background: var(--mistral-flame);
+    }
+
+    .tree-display {
+      font-family: monospace;
+      font-size: 14px;
+      background: #ffffff;
+      padding: 12px;
+      margin-top: 12px;
+      white-space: pre-wrap;
+      overflow-x: auto;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .summary-card {
+      background: var(--warm-ivory);
+      padding: 24px;
+      text-align: center;
+    }
+
+    .summary-card .value {
+      font-size: 48px;
+      font-weight: 400;
+      color: var(--mistral-orange);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .summary-card label {
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: hsl(0, 0%, 24%);
+    }
+
+    .array-display {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
     }
+
     .array-item {
-      background: #f0f0f0;
-      padding: 5px 12px;
-      border-radius: 15px;
-      font-size: 13px;
+      background: var(--sunshine-300);
+      padding: 4px 12px;
+      font-size: 14px;
+    }
+
+    .error-display {
+      background: #fff5f0;
+      border: 1px solid var(--mistral-flame);
+      color: var(--mistral-orange);
+      padding: 16px;
+      margin-bottom: 24px;
+    }
+
+    .block-identity {
+      display: flex;
+      margin-bottom: 48px;
+    }
+
+    .block {
+      flex: 1;
+      height: 8px;
+    }
+
+    .block-yellow { background: var(--bright-yellow); }
+    .block-gold { background: var(--block-gold); }
+    .block-amber { background: var(--sunshine-700); }
+    .block-orange { background: var(--block-orange); }
+    .block-flame { background: var(--mistral-flame); }
+    .block-mistral { background: var(--mistral-orange); }
+
+    footer {
+      background: linear-gradient(180deg, var(--sunshine-700) 0%, var(--mistral-black) 100%);
+      padding: 48px 0;
+      margin-top: 80px;
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-info {
+      color: #ffffff;
+    }
+
+    .footer-info p {
+      font-size: 16px;
+      margin-bottom: 4px;
+    }
+
+    .footer-info .name {
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+
+    .footer-links a {
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 14px;
+      margin-left: 24px;
+      opacity: 0.8;
+    }
+
+    .footer-links a:hover {
+      opacity: 1;
+      text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 48px;
+        letter-spacing: -1px;
+      }
+
+      .meta-grid,
+      .summary-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-content {
+        flex-direction: column;
+        gap: 24px;
+      }
+
+      .footer-links a {
+        display: block;
+        margin-left: 0;
+        margin-bottom: 8px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .hero h1 {
+        font-size: 32px;
+      }
+
+      .main-card {
+        padding: 16px;
+      }
+
+      .block-identity {
+        flex-wrap: wrap;
+      }
+
+      .block {
+        height: 4px;
+        flex-basis: 33.33%;
+      }
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>SRM Full Stack Challenge</h1>
-    
-    <div class="card">
-      <label for="dataInput">Enter Hierarchy Data</label>
-      <div class="helper">Enter edges separated by commas or newlines (e.g., A->B, A->C, B->D)</div>
-      <textarea id="dataInput" placeholder="A->B, A->C, B->D"></textarea>
-      <button id="submitBtn">Process Hierarchy</button>
+    <header>
+      <div class="logo">H<span>ierarchy</span></div>
+    </header>
+
+    <div class="block-identity">
+      <div class="block block-yellow"></div>
+      <div class="block block-gold"></div>
+      <div class="block block-amber"></div>
+      <div class="block block-orange"></div>
+      <div class="block block-flame"></div>
+      <div class="block block-mistral"></div>
     </div>
-    
-    <div id="errorContainer"></div>
-    <div id="resultContainer"></div>
+
+    <section class="hero">
+      <h1>Process Your Hierarchy Data</h1>
+      <p>Enter node relationships to detect cycles, build tree structures, and analyze depth. Built for the SRM Full Stack Engineering Challenge.</p>
+    </section>
+
+    <main class="main-card">
+      <div class="input-section">
+        <label for="dataInput">Enter Hierarchy Data</label>
+        <textarea id="dataInput" placeholder="A->B, A->C, B->D"></textarea>
+        <p class="helper">Separate entries with commas or newlines (e.g., A->B, A->C, B->D)</p>
+      </div>
+
+      <button id="submitBtn" class="btn btn-dark">Process Hierarchy</button>
+
+      <div id="errorContainer"></div>
+
+      <div id="resultsContainer"></div>
+    </main>
+
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-info">
+            <p class="name">AYush Dutta</p>
+            <p>dutta_ayush@srmap.edu.in</p>
+            <p>AP23110011131</p>
+          </div>
+          <div class="footer-links">
+            <a href="https://tech-assignment-api.vercel.app">API</a>
+            <a href="https://github.com/Spirizeon/tech-assignment-api">GitHub</a>
+          </div>
+        </div>
+      </div>
+    </footer>
   </div>
-  
+
   <script>
-    const API_URL = 'http://localhost:3000/bfhl';
-    
+    const API_URL = 'https://tech-assignment-api.vercel.app/bfhl';
+
     document.getElementById('submitBtn').addEventListener('click', async () => {
       const input = document.getElementById('dataInput').value;
       const errorContainer = document.getElementById('errorContainer');
-      const resultContainer = document.getElementById('resultContainer');
+      const resultsContainer = document.getElementById('resultsContainer');
       const btn = document.getElementById('submitBtn');
-      
+
       errorContainer.innerHTML = '';
-      resultContainer.innerHTML = '';
-      
+      resultsContainer.innerHTML = '';
+
       const data = input.split(/[,\n]/).map(s => s.trim()).filter(s => s);
-      
+
       if (data.length === 0) {
-        errorContainer.innerHTML = '<div class="error">Please enter some data</div>';
+        errorContainer.innerHTML = '<div class="error-display">Please enter some data</div>';
         return;
       }
-      
+
       btn.disabled = true;
       btn.textContent = 'Processing...';
-      
+
       try {
         const response = await fetch(API_URL, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ data })
         });
-        
+
         if (!response.ok) {
           throw new Error(`API Error: ${response.status}`);
         }
-        
+
         const result = await response.json();
-        displayResult(result);
+        displayResults(result);
       } catch (error) {
-        errorContainer.innerHTML = `<div class="error">Failed to connect to API: ${error.message}</div>`;
+        errorContainer.innerHTML = `<div class="error-display">Failed to connect to API: ${error.message}</div>`;
       } finally {
         btn.disabled = false;
         btn.textContent = 'Process Hierarchy';
       }
     });
-    
-    function displayResult(result) {
-      const container = document.getElementById('resultContainer');
-      
-      const metaHtml = `
-        <div class="meta-info">
-          <div class="meta-item"><strong>User ID</strong><span>${result.user_id}</span></div>
-          <div class="meta-item"><strong>Email</strong><span>${result.email_id}</span></div>
-          <div class="meta-item"><strong>Roll Number</strong><span>${result.college_roll_number}</span></div>
-        </div>
+
+    function displayResults(result) {
+      const container = document.getElementById('resultsContainer');
+
+      let metaHtml = `
+        <div class="results-section">
+          <div class="result-block">
+            <h3>User Information</h3>
+            <div class="meta-grid">
+              <div class="meta-item"><strong>User ID</strong><span>${result.user_id}</span></div>
+              <div class="meta-item"><strong>Email</strong><span>${result.email_id}</span></div>
+              <div class="meta-item"><strong>Roll Number</strong><span>${result.college_roll_number}</span></div>
+            </div>
+          </div>
       `;
-      
+
       let invalidHtml = '';
       if (result.invalid_entries && result.invalid_entries.length > 0) {
         invalidHtml = `
-          <div class="result-section">
+          <div class="result-block">
             <h3>Invalid Entries</h3>
-            <div class="array-list">
+            <div class="array-display">
               ${result.invalid_entries.map(e => `<span class="array-item">${e}</span>`).join('')}
             </div>
           </div>
         `;
       }
-      
+
       let dupHtml = '';
       if (result.duplicate_edges && result.duplicate_edges.length > 0) {
         dupHtml = `
-          <div class="result-section">
+          <div class="result-block">
             <h3>Duplicate Edges</h3>
-            <div class="array-list">
+            <div class="array-display">
               ${result.duplicate_edges.map(e => `<span class="array-item">${e}</span>`).join('')}
             </div>
           </div>
         `;
       }
-      
+
       let hierHtml = '';
       if (result.hierarchies && result.hierarchies.length > 0) {
         hierHtml = `
-          <div class="result-section">
+          <div class="result-block">
             <h3>Hierarchies</h3>
             <div class="hierarchies-list">
               ${result.hierarchies.map(h => `
-                <div class="hierarchy-card ${h.has_cycle ? 'cycle' : ''}">
-                  <div class="hierarchy-root">
-                    Root: ${h.root}
-                    ${h.depth ? `<span class="hierarchy-depth">Depth: ${h.depth}</span>` : ''}
-                    ${h.has_cycle ? '<span class="hierarchy-cycle">Cycle Detected</span>' : ''}
-                  </div>
-                  ${!h.has_cycle ? `<div class="tree-view">${JSON.stringify(h.tree, null, 2)}</div>` : ''}
+                <div class="hierarchy-item ${h.has_cycle ? 'cycle' : ''}">
+                  <div class="hierarchy-root">Root: ${h.root}</div>
+                  ${h.depth ? `<span class="hierarchy-meta">Depth: ${h.depth}</span>` : ''}
+                  ${h.has_cycle ? '<span class="hierarchy-meta cycle-tag">Cycle</span>' : ''}
+                  ${!h.has_cycle ? `<div class="tree-display">${JSON.stringify(h.tree, null, 2)}</div>` : ''}
                 </div>
               `).join('')}
             </div>
           </div>
         `;
       }
-      
+
       let sumHtml = '';
       if (result.summary) {
         sumHtml = `
-          <div class="result-section">
+          <div class="result-block">
             <h3>Summary</h3>
-            <div class="summary-cards">
+            <div class="summary-grid">
               <div class="summary-card">
                 <div class="value">${result.summary.total_trees}</div>
                 <label>Total Trees</label>
@@ -334,16 +570,8 @@
           </div>
         `;
       }
-      
-      container.innerHTML = `
-        <div class="card">
-          ${metaHtml}
-          ${invalidHtml}
-          ${dupHtml}
-          ${hierHtml}
-          ${sumHtml}
-        </div>
-      `;
+
+      container.innerHTML = metaHtml + invalidHtml + dupHtml + hierHtml + sumHtml + '</div>';
     }
   </script>
 </body>
