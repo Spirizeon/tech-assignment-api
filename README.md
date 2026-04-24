@@ -2,6 +2,11 @@
 
 This is a Full Stack project that processes hierarchy data and returns nested tree structures, cycle detection, and summary statistics.
 
+## Deployed URLs
+
+- **Frontend**: https://tech-assignment-frontend.pages.dev
+- **Backend API**: https://tech-assignment-api.vercel.app/bfhl
+
 ## Stack
 
 - Backend: Node.js + Express
@@ -9,11 +14,11 @@ This is a Full Stack project that processes hierarchy data and returns nested tr
 
 ## Deployable Files
 
-### Frontend (Cloudflare Pages)
+### Frontend (Vercel/Cloudflare Pages)
 - `index.html` - Static HTML file, no build command needed.
 
-### Backend (Node.js Hosting)
-- `Dockerfile.backend` + `server.js` - Deploy to Render, Railway, or similar.
+### Backend (Vercel)
+- `server.js` - Deploy as Vercel serverless function or to Render/Railway.
 
 ## Local Development
 
@@ -54,6 +59,14 @@ docker compose up --build
 
 - Backend: http://localhost:3000
 - Frontend: http://localhost:8080
+
+## Testing the API
+
+```bash
+curl -X POST https://tech-assignment-api.vercel.app/bfhl \
+  -H "Content-Type: application/json" \
+  -d '{"data": ["A->B", "A->C", "B->D"]}'
+```
 
 ## API Endpoint
 
@@ -105,8 +118,8 @@ docker compose up --build
 ├── server.js              # Express backend server
 ├── index.html            # Frontend SPA (static)
 ├── Dockerfile.backend    # Backend container
-├── Dockerfile.frontend   # Frontend container (nginx)
-├── docker-compose.yml    # Full stack compose
+├── Dockerfile.frontend  # Frontend container (nginx)
+├── docker-compose.yml  # Full stack compose
 ├── test.js              # Test cases
 ├── package.json         # Dependencies
 └── .github/workflows/   # CI/CD workflows
