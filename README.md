@@ -6,9 +6,16 @@ This is a Full Stack project that processes hierarchy data and returns nested tr
 
 - Backend: Node.js + Express
 - Frontend: Plain HTML/CSS/JS
-- Hosting: Vercel / Render / Railway
 
-## Getting Started
+## Deployable Files
+
+### Frontend (Cloudflare Pages)
+- `index.html` - Static HTML file, no build command needed.
+
+### Backend (Node.js Hosting)
+- `Dockerfile.backend` + `server.js` - Deploy to Render, Railway, or similar.
+
+## Local Development
 
 ### Install Dependencies
 
@@ -30,6 +37,24 @@ The server will start on http://localhost:3000
 npm test
 ```
 
+## Docker Deployment
+
+### Backend Only
+
+```bash
+docker build -f Dockerfile.backend -t backend .
+docker run -p 3000:3000 backend
+```
+
+### Full Stack
+
+```bash
+docker compose up --build
+```
+
+- Backend: http://localhost:3000
+- Frontend: http://localhost:8080
+
 ## API Endpoint
 
 ### POST /bfhl
@@ -44,9 +69,9 @@ npm test
 **Response:**
 ```json
 {
-  "user_id": "fullname_ddmmyyyy",
-  "email_id": "your.email@college.edu",
-  "college_roll_number": "21CS1001",
+  "user_id": "ayushdutta_11112004",
+  "email_id": "dutta_ayush@srmap.edu.in",
+  "college_roll_number": "AP23110011131",
   "hierarchies": [
     {
       "root": "A",
@@ -77,14 +102,14 @@ npm test
 ## Project Structure
 
 ```
-├── server.js       # Express backend server
-├── index.html     # Frontend SPA
-├── test.js       # Test cases
-├── package.json   # Dependencies
-└── .github/workflows/
-    └── ci.yml    # GitHub Actions CI
+├── server.js              # Express backend server
+├── index.html            # Frontend SPA (static)
+├── Dockerfile.backend    # Backend container
+├── Dockerfile.frontend   # Frontend container (nginx)
+├── docker-compose.yml    # Full stack compose
+├── test.js              # Test cases
+├── package.json         # Dependencies
+└── .github/workflows/   # CI/CD workflows
+    ├── ci.yml          # Test workflow
+    └── ghcr.yml        # GHCR push workflow
 ```
-
-## Deployment
-
-Deploy to any Node.js hosting platform (Render, Railway, Vercel). The API includes CORS support for cross-origin requests.
