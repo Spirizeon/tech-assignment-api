@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SRM Full Stack Challenge</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    h1 {
+      color: white;
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 2.5rem;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    }
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 30px;
+      margin-bottom: 20px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    }
+    label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: 600;
+      color: #333;
+    }
+    textarea {
+      width: 100%;
+      height: 150px;
+      padding: 15px;
+      border: 2px solid #e1e1e1;
+      border-radius: 8px;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      resize: vertical;
+      transition: border-color 0.3s;
+    }
+    textarea:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+    .helper {
+      color: #666;
+      font-size: 12px;
+      margin-bottom: 10px;
+    }
+    button {
+      width: 100%;
+      padding: 15px 30px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      margin-top: 15px;
+    }
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+    }
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+    .error {
+      background: #fee;
+      border: 1px solid #fcc;
+      color: #c00;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+    .result-section {
+      margin-bottom: 25px;
+    }
+    .result-section h3 {
+      color: #333;
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #eee;
+    }
+    .meta-info {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    .meta-item {
+      background: #f8f9fa;
+      padding: 12px 15px;
+      border-radius: 8px;
+    }
+    .meta-item strong {
+      display: block;
+      color: #666;
+      font-size: 12px;
+      margin-bottom: 5px;
+    }
+    .meta-item span {
+      color: #333;
+      font-weight: 600;
+    }
+    .hierarchies-list {
+      display: grid;
+      gap: 15px;
+    }
+    .hierarchy-card {
+      background: #f8f9fa;
+      border-radius: 8px;
+      padding: 15px;
+      border-left: 4px solid #667eea;
+    }
+    .hierarchy-card.cycle {
+      border-left-color: #e74c3c;
+      background: #fff5f5;
+    }
+    .hierarchy-root {
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 10px;
+    }
+    .hierarchy-depth {
+      display: inline-block;
+      background: #667eea;
+      color: white;
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-size: 12px;
+      margin-left: 10px;
+    }
+    .hierarchy-cycle {
+      display: inline-block;
+      background: #e74c3c;
+      color: white;
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-size: 12px;
+      margin-left: 10px;
+    }
+    .tree-view {
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      background: white;
+      padding: 10px;
+      border-radius: 4px;
+      overflow-x: auto;
+    }
+    .summary-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+    }
+    .summary-card {
+      text-align: center;
+      padding: 20px;
+      background: #f8f9fa;
+      border-radius: 8px;
+    }
+    .summary-card.value {
+      font-size: 32px;
+      font-weight: 700;
+      color: #667eea;
+    }
+    .summary-card label {
+      color: #666;
+      font-size: 14px;
+      margin-top: 5px;
+    }
+    .array-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .array-item {
+      background: #f0f0f0;
+      padding: 5px 12px;
+      border-radius: 15px;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>SRM Full Stack Challenge</h1>
+    
+    <div class="card">
+      <label for="dataInput">Enter Hierarchy Data</label>
+      <div class="helper">Enter edges separated by commas or newlines (e.g., A->B, A->C, B->D)</div>
+      <textarea id="dataInput" placeholder="A->B, A->C, B->D"></textarea>
+      <button id="submitBtn">Process Hierarchy</button>
+    </div>
+    
+    <div id="errorContainer"></div>
+    <div id="resultContainer"></div>
+  </div>
+  
+  <script>
+    const API_URL = 'https://your-api-url.onrender.com/bfhl';
+    
+    document.getElementById('submitBtn').addEventListener('click', async () => {
+      const input = document.getElementById('dataInput').value;
+      const errorContainer = document.getElementById('errorContainer');
+      const resultContainer = document.getElementById('resultContainer');
+      const btn = document.getElementById('submitBtn');
+      
+      errorContainer.innerHTML = '';
+      resultContainer.innerHTML = '';
+      
+      const data = input.split(/[,\n]/).map(s => s.trim()).filter(s => s);
+      
+      if (data.length === 0) {
+        errorContainer.innerHTML = '<div class="error">Please enter some data</div>';
+        return;
+      }
+      
+      btn.disabled = true;
+      btn.textContent = 'Processing...';
+      
+      try {
+        const response = await fetch(API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ data })
+        });
+        
+        if (!response.ok) {
+          throw new Error(`API Error: ${response.status}`);
+        }
+        
+        const result = await response.json();
+        displayResult(result);
+      } catch (error) {
+        errorContainer.innerHTML = `<div class="error">Failed to connect to API: ${error.message}</div>`;
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Process Hierarchy';
+      }
+    });
+    
+    function displayResult(result) {
+      const container = document.getElementById('resultContainer');
+      
+      const metaHtml = `
+        <div class="meta-info">
+          <div class="meta-item"><strong>User ID</strong><span>${result.user_id}</span></div>
+          <div class="meta-item"><strong>Email</strong><span>${result.email_id}</span></div>
+          <div class="meta-item"><strong>Roll Number</strong><span>${result.college_roll_number}</span></div>
+        </div>
+      `;
+      
+      let invalidHtml = '';
+      if (result.invalid_entries && result.invalid_entries.length > 0) {
+        invalidHtml = `
+          <div class="result-section">
+            <h3>Invalid Entries</h3>
+            <div class="array-list">
+              ${result.invalid_entries.map(e => `<span class="array-item">${e}</span>`).join('')}
+            </div>
+          </div>
+        `;
+      }
+      
+      let dupHtml = '';
+      if (result.duplicate_edges && result.duplicate_edges.length > 0) {
+        dupHtml = `
+          <div class="result-section">
+            <h3>Duplicate Edges</h3>
+            <div class="array-list">
+              ${result.duplicate_edges.map(e => `<span class="array-item">${e}</span>`).join('')}
+            </div>
+          </div>
+        `;
+      }
+      
+      let hierHtml = '';
+      if (result.hierarchies && result.hierarchies.length > 0) {
+        hierHtml = `
+          <div class="result-section">
+            <h3>Hierarchies</h3>
+            <div class="hierarchies-list">
+              ${result.hierarchies.map(h => `
+                <div class="hierarchy-card ${h.has_cycle ? 'cycle' : ''}">
+                  <div class="hierarchy-root">
+                    Root: ${h.root}
+                    ${h.depth ? `<span class="hierarchy-depth">Depth: ${h.depth}</span>` : ''}
+                    ${h.has_cycle ? '<span class="hierarchy-cycle">Cycle Detected</span>' : ''}
+                  </div>
+                  ${!h.has_cycle ? `<div class="tree-view">${JSON.stringify(h.tree, null, 2)}</div>` : ''}
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }
+      
+      let sumHtml = '';
+      if (result.summary) {
+        sumHtml = `
+          <div class="result-section">
+            <h3>Summary</h3>
+            <div class="summary-cards">
+              <div class="summary-card">
+                <div class="value">${result.summary.total_trees}</div>
+                <label>Total Trees</label>
+              </div>
+              <div class="summary-card">
+                <div class="value">${result.summary.total_cycles}</div>
+                <label>Total Cycles</label>
+              </div>
+              <div class="summary-card">
+                <div class="value">${result.summary.largest_tree_root || '-'}</div>
+                <label>Largest Tree Root</label>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+      
+      container.innerHTML = `
+        <div class="card">
+          ${metaHtml}
+          ${invalidHtml}
+          ${dupHtml}
+          ${hierHtml}
+          ${sumHtml}
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>
