@@ -4,7 +4,7 @@ This is a Full Stack project that processes hierarchy data and returns nested tr
 
 ## Deployed URLs
 
-- **Frontend**: https://tech-assignment-frontend.pages.dev
+- **Frontend**: [https://tech-assignment-frontend.pages.dev](https://tech-assignment-api-kdov.vercel.app/)
 - **Backend API**: https://tech-assignment-api.vercel.app/bfhl
 
 ## Stack
