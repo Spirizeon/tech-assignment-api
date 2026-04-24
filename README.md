@@ -13,24 +13,13 @@ This is a Full Stack project that processes hierarchy data and returns nested tr
 - Frontend: Plain HTML/CSS/JS
 
 ## Deployable Files
-
-### Frontend (Vercel/Cloudflare Pages)
 - `frontend/index.html` - Static HTML file, no build command needed.
-
-### Backend (Vercel)
 - `server.js` - Deploy as Vercel serverless function or to Render/Railway.
 
 ## Local Development
 
-### Install Dependencies
-
 ```bash
 npm install
-```
-
-### Run the Server
-
-```bash
 npm start
 ```
 
@@ -114,15 +103,4 @@ curl -X POST https://tech-assignment-api.vercel.app/bfhl \
 
 ## Project Structure
 
-```
-├── server.js              # Express backend server
-├── index.html            # Frontend SPA (static)
-├── Dockerfile.backend    # Backend container
-├── Dockerfile.frontend  # Frontend container (nginx)
-├── docker-compose.yml  # Full stack compose
-├── test.js              # Test cases
-├── package.json         # Dependencies
-└── .github/workflows/   # CI/CD workflows
-    ├── ci.yml          # Test workflow
-    └── ghcr.yml        # GHCR push workflow
-```
+<img width="2096" height="4232" alt="diagram" src="https://github.com/user-attachments/assets/76ac34b1-434e-4213-aa7f-7a6e65e60154" />
