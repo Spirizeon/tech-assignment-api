@@ -15,7 +15,7 @@ This is a Full Stack project that processes hierarchy data and returns nested tr
 ## Deployable Files
 
 ### Frontend (Vercel/Cloudflare Pages)
-- `index.html` - Static HTML file, no build command needed.
+- `frontend/index.html` - Static HTML file, no build command needed.
 
 ### Backend (Vercel)
 - `server.js` - Deploy as Vercel serverless function or to Render/Railway.
